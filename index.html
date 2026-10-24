@@ -100,6 +100,18 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 @keyframes sway{from{transform:rotate(-1.2deg)}to{transform:rotate(1.4deg)}}
 
 #petals{position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none}
+.music{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:70;width:50px;height:50px;border-radius:50%;border:1px solid var(--gold);background:rgba(13,13,13,.82);backdrop-filter:blur(6px);color:var(--gold);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.45);transition:transform .3s,opacity .5s}
+.music:hover{transform:scale(1.06)}
+.music:focus-visible{outline:2px solid var(--ivory);outline-offset:3px}
+.music .bars{display:flex;align-items:flex-end;gap:3px;height:16px}
+.music .bars i{display:block;width:3px;height:4px;background:var(--gold);border-radius:1px}
+.music.playing .bars i{animation:eq 1s ease-in-out infinite}
+.music.playing .bars i:nth-child(2){animation-delay:.2s}
+.music.playing .bars i:nth-child(3){animation-delay:.4s}
+.music.playing .bars i:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:4px}50%{height:16px}}
+.music:not(.playing)::after{content:"";position:absolute;width:30px;height:1px;background:var(--gold);transform:rotate(-45deg)}
+#ytwrap{position:fixed;left:-400px;bottom:0;width:200px;height:200px;opacity:0;pointer-events:none;z-index:-1}
 
 /* ---------- Opener: ivory card with arched photo, on black velvet ---------- */
 #opener{position:fixed;inset:0;z-index:50;display:flex;align-items:safe center;justify-content:center;overflow-y:auto;overflow-x:hidden;
@@ -289,6 +301,8 @@ fieldset{border:0;padding:0;margin:0}
 </svg>
 
 <canvas id="petals" aria-hidden="true"></canvas>
+<div id="ytwrap" aria-hidden="true"><div id="ytplayer"></div></div>
+<button class="music" id="musicBtn" type="button" aria-label="Pause music" hidden><span class="bars"><i></i><i></i><i></i><i></i></span></button>
 
 <div id="opener" role="dialog" aria-label="Wedding invitation">
   <div class="card">
@@ -509,7 +523,26 @@ fieldset{border:0;padding:0;margin:0}
   /* ---------- opener ---------- */
   var op=document.getElementById('opener');
   document.body.classList.add('locked');
+  /* ---------- background music (YouTube) ---------- */
+  var VIDEO_ID='i9UDD6zyCGs',yt=null,ytReady=false,wantPlay=false,musicOn=false,mBtn=document.getElementById('musicBtn');
+  function fadeIn(){var v=0;try{yt.setVolume(0)}catch(x){}var iv=setInterval(function(){v+=5;try{yt.setVolume(Math.min(v,70))}catch(x){}if(v>=70)clearInterval(iv)},150)}
+  function setBtn(on){musicOn=on;mBtn.classList.toggle('playing',on);mBtn.setAttribute('aria-label',on?'Pause music':'Play music')}
+  function startMusic(){wantPlay=true;if(!ytReady)return;try{yt.playVideo();fadeIn();setBtn(true);mBtn.hidden=false}catch(x){}}
+  window.onYouTubeIframeAPIReady=function(){
+    yt=new YT.Player('ytplayer',{width:200,height:200,videoId:VIDEO_ID,
+      playerVars:{autoplay:0,controls:0,loop:1,playlist:VIDEO_ID,playsinline:1,rel:0,modestbranding:1},
+      events:{
+        onReady:function(){ytReady=true;if(wantPlay)startMusic()},
+        onStateChange:function(e){if(e.data===1){setBtn(true);mBtn.hidden=false}else if(e.data===2){setBtn(false)}},
+        onError:function(){mBtn.hidden=true}
+      }});
+  };
+  (function(){var s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.async=true;s.onerror=function(){mBtn.hidden=true};document.head.appendChild(s)})();
+  mBtn.addEventListener('click',function(){if(!yt)return;if(musicOn){yt.pauseVideo();setBtn(false)}else{yt.playVideo();setBtn(true)}});
+  document.addEventListener('visibilitychange',function(){if(!yt||!ytReady)return;if(document.hidden&&musicOn){yt.pauseVideo();mBtn.dataset.resume='1'}else if(!document.hidden&&mBtn.dataset.resume){yt.playVideo();delete mBtn.dataset.resume}});
+
   document.getElementById('openBtn').addEventListener('click',function(){
+    startMusic();
     op.classList.add('gone');document.body.classList.remove('locked');petalTarget=10;
     setTimeout(function(){op.hidden=true},1300);
   });
