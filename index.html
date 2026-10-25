@@ -173,6 +173,14 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 .verse blockquote{margin:0;font-style:italic;font-weight:400;font-size:clamp(26px,5.6vw,34px);line-height:1.35;text-wrap:balance}
 .verse .cross{color:var(--burgundy);font-size:30px;line-height:1;filter:drop-shadow(0 0 12px rgba(91,15,31,.8))}
 .verse cite{display:block;margin-top:20px;font-style:normal}
+.verse .vcard{position:relative;max-width:520px;margin:0 auto;padding:46px 26px 40px;background:#fbf9f5;border:1px solid rgba(164,124,60,.55);outline:1px solid rgba(164,124,60,.28);outline-offset:-7px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.verse .vcard blockquote{color:#1d1719}
+.verse .vcard .cross{color:var(--burgundy);filter:none}
+.verse .vcard cite{color:#8a6a30}
+.verse .vcard .divider{color:#a47c3c}
+.verse .vcard .divider::before,.verse .vcard .divider::after{background:rgba(164,124,60,.5)}
+.verse .corner{z-index:4}
+.verse .gar{z-index:3}
 .gar{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
 .couple .gar{z-index:3}
 .gar .s{opacity:0;transition:opacity .35s ease}
@@ -352,10 +360,12 @@ fieldset{border:0;padding:0;margin:0}
   <section class="verse center" data-garland>
     <div class="corner tr" data-floral="v"></div>
     <div class="wrap rv">
-      <div class="cross">&#10016;</div>
-      <div class="divider" aria-hidden="true">&#9670;</div>
-      <blockquote>&#8220;Therefore what God has joined together, let no one separate.&#8221;</blockquote>
-      <cite class="caps">Mark 10 : 9</cite>
+      <div class="vcard">
+        <div class="cross">&#10016;</div>
+        <div class="divider" aria-hidden="true">&#9670;</div>
+        <blockquote>&#8220;Therefore what God has joined together, let no one separate.&#8221;</blockquote>
+        <cite class="caps">Mark 10 : 9</cite>
+      </div>
     </div>
   </section>
 
