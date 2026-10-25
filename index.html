@@ -34,8 +34,8 @@ img{max-width:100%}
 /* Layout: an black arch-photo card opener with painted burgundy and blush rose corners and falling rose petals, then a noir black-and-white film: photo plates as backdrops only, black text leaves, one ivory "paper" card for the date, a burgundy RSVP band. Single committed dark look. */
 :root{
   color-scheme: dark;
-  --black:#0d0d0d;
-  --black-2:#151313;
+  --black:#1d1719;
+  --black-2:#251e20;
   --burgundy:#5b0f1f;
   --burgundy-deep:#2a0710;
   --ivory:#f7f6f2;
@@ -64,8 +64,8 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--gold-line)}
 
 /* photo backdrop: noir */
-.plate{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;filter:grayscale(1) contrast(1.15) brightness(.42)}
-.plate::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(13,13,13,0) 30%,rgba(13,13,13,.85) 100%)}
+.plate{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;filter:grayscale(1) contrast(1.1) brightness(.62)}
+.plate::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(29,23,25,0) 35%,rgba(29,23,25,.7) 100%)}
 .grain{position:absolute;inset:-50%;z-index:1;pointer-events:none;opacity:.10;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:grain 1.2s steps(6) infinite}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
 
@@ -115,12 +115,12 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 
 /* ---------- Opener: ivory card with arched photo, on black velvet ---------- */
 #opener{position:fixed;inset:0;z-index:50;display:flex;align-items:safe center;justify-content:center;overflow-y:auto;overflow-x:hidden;
-  background:radial-gradient(ellipse 70% 55% at 50% 38%,#3a0b16 0%,rgba(42,7,16,.6) 40%,transparent 75%),linear-gradient(180deg,#0d0d0d,#060606);
+  background:radial-gradient(ellipse 70% 55% at 50% 38%,#3a0b16 0%,rgba(42,7,16,.6) 40%,transparent 75%),linear-gradient(180deg,#241c1f,#161113);
   transition:opacity 1.2s ease, visibility 1.2s;padding:max(60px,env(safe-area-inset-top,0px)) max(22px,env(safe-area-inset-right,0px)) max(60px,env(safe-area-inset-bottom,0px)) max(22px,env(safe-area-inset-left,0px))}
 #opener::before{content:"";position:fixed;inset:0;z-index:1;background:repeating-linear-gradient(115deg,rgba(255,255,255,.02) 0 2px,transparent 2px 9px);pointer-events:none}
 #opener.gone{opacity:0;visibility:hidden}
 #opener .card .photo{z-index:6}
-.card{position:relative;z-index:2;flex:none;width:min(80vw,390px);background:linear-gradient(180deg,#121010,#080808);color:var(--ivory);text-align:center;padding:16px 16px 30px;box-shadow:0 40px 90px rgba(0,0,0,.85),0 0 60px rgba(91,15,31,.25);transition:transform 1.2s cubic-bezier(.7,0,.2,1),opacity 1s;opacity:0;transform:translateY(24px) scale(.97);animation:cardIn 1.4s .2s cubic-bezier(.2,.8,.2,1) forwards}
+.card{position:relative;z-index:2;flex:none;width:min(80vw,390px);background:linear-gradient(180deg,#2a2225,#1c1618);color:var(--ivory);text-align:center;padding:16px 16px 30px;box-shadow:0 40px 90px rgba(0,0,0,.85),0 0 60px rgba(91,15,31,.25);transition:transform 1.2s cubic-bezier(.7,0,.2,1),opacity 1s;opacity:0;transform:translateY(24px) scale(.97);animation:cardIn 1.4s .2s cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes cardIn{to{opacity:1;transform:none}}
 .card::before{content:"";position:absolute;inset:7px;border:1px solid var(--gold-line);pointer-events:none}
 .card::after{content:"";position:absolute;inset:11px;border:1px solid rgba(198,164,106,.18);pointer-events:none}
@@ -158,9 +158,9 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 
 /* ---------- Hero ---------- */
 .hero{overflow:hidden;position:relative;min-height:94vh;display:flex;align-items:flex-end;padding-block:0}
-.hero .plate{filter:grayscale(1) contrast(1.15) brightness(.58);background-position:center 34%;animation:kb 22s ease-in-out infinite alternate}
+.hero .plate{filter:grayscale(1) contrast(1.08) brightness(.8);background-position:center 34%;animation:kb 22s ease-in-out infinite alternate}
 @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1)}}
-.hero .plate::after{background:linear-gradient(180deg,rgba(13,13,13,.2) 0%,rgba(13,13,13,.1) 30%,rgba(13,13,13,.8) 70%,var(--black) 100%)}
+.hero .plate::after{background:linear-gradient(180deg,rgba(29,23,25,.1) 0%,rgba(29,23,25,0) 35%,rgba(29,23,25,.7) 72%,var(--black) 100%)}
 .hero .wrap{padding-bottom:64px;text-align:center;width:100%}
 .hero .names{font-family:var(--f-serif);font-weight:400;font-size:clamp(40px,11vw,74px);letter-spacing:.18em;line-height:1;margin:16px 0 0;padding-left:.18em;color:var(--ivory)}
 .hero .names .and{display:block;font-size:.55em;margin:.06em 0 .1em;letter-spacing:0}
@@ -181,7 +181,7 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 @media (prefers-reduced-motion:reduce){.gar .s,.gar .lf,.gar .bd{opacity:1;transform:none}}
 
 /* ---------- Invitation ---------- */
-.invite .plate{background-position:center 40%;filter:grayscale(1) contrast(1.1) brightness(.22)}
+.invite .plate{background-position:center 40%;filter:grayscale(1) contrast(1.05) brightness(.36)}
 .invite p{margin:0}
 .invite .parents{font-size:clamp(25px,5.4vw,31px);line-height:1.3;margin-top:20px}
 .house{color:var(--ivory-dim);font-style:italic;font-weight:400}
@@ -202,7 +202,7 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 @media (min-width:820px){.couple .wrap{max-width:1000px}.couple-grid{grid-template-columns:1fr auto 1fr}}
 
 /* ---------- Save the date: ivory paper ---------- */
-.std{background:#0b0b0b}
+.std{background:#1a1517}
 .paper{position:relative;z-index:2;max-width:520px;margin:0 auto;background:var(--ivory);color:var(--ink-on-ivory);padding:64px 28px 56px;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.6)}
 .paper::before{content:"";position:absolute;inset:14px;border:1px solid rgba(13,13,13,.55);pointer-events:none}
 .paper .caps{color:var(--burgundy)}
@@ -228,7 +228,7 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 .std-line{margin:18px 0 0;font-style:italic;color:var(--muted-on-ivory)}
 
 /* ---------- Schedule ---------- */
-.schedule .plate{background-position:center 30%;filter:grayscale(1) contrast(1.15) brightness(.26)}
+.schedule .plate{background-position:center 30%;filter:grayscale(1) contrast(1.08) brightness(.45)}
 .day-list{list-style:none;margin:46px 0 0;padding:0}
 .event{display:grid;grid-template-columns:100px 1fr;gap:22px;padding:30px 0;border-top:1px solid var(--gold-line)}
 .event:last-child{border-bottom:1px solid var(--gold-line)}
@@ -271,8 +271,8 @@ fieldset{border:0;padding:0;margin:0}
 
 /* ---------- Finale ---------- */
 .finale{overflow:hidden;position:relative;min-height:86vh;display:flex;align-items:flex-end;padding-block:0}
-.finale .plate{inset:0 0 -2cm 0;transform:translateY(-2cm);background-position:center 28%;filter:grayscale(1) contrast(1.15) brightness(.62)}
-.finale .plate::after{background:linear-gradient(180deg,var(--black) 0%,rgba(13,13,13,.15) 28%,rgba(13,13,13,.85) 78%)}
+.finale .plate{inset:0 0 -2cm 0;transform:translateY(-2cm);background-position:center 28%;filter:grayscale(1) contrast(1.08) brightness(.82)}
+.finale .plate::after{background:linear-gradient(180deg,var(--black) 0%,rgba(29,23,25,.1) 28%,rgba(29,23,25,.75) 78%)}
 .finale .wrap{text-align:center;width:100%;padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
 .finale .names{font-weight:400;font-size:clamp(40px,11vw,76px);letter-spacing:.18em;line-height:1;margin:14px 0 18px;padding-left:.18em;color:var(--gold);text-transform:uppercase}
 .finale .names .and{display:block;font-size:.6em;letter-spacing:0;margin:.06em 0}
