@@ -181,6 +181,7 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 .verse .vcard .divider::before,.verse .vcard .divider::after{background:rgba(164,124,60,.5)}
 .verse .corner{z-index:4}
 .verse .gar{z-index:3}
+.gar.halo{z-index:5}
 .gar{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
 .couple .gar{z-index:3}
 .gar .s{opacity:0;transition:opacity .35s ease}
@@ -540,7 +541,7 @@ fieldset{border:0;padding:0;margin:0}
   function sv(tag,at,par){var e=document.createElementNS(SVGNS,tag);for(var k in at)e.setAttribute(k,at[k]);if(par)par.appendChild(e);return e}
   function leafD(L,w){return 'M0 0 C'+(w)+' '+(-L*.25)+' '+(w*.9)+' '+(-L*.75)+' 0 '+(-L)+' C'+(-w*.9)+' '+(-L*.75)+' '+(-w)+' '+(-L*.25)+' 0 0Z'}
   function garland(host){
-    var old=host.querySelector('svg.gar');if(old)old.remove();
+    host.querySelectorAll('svg.gar').forEach(function(o){o.remove()});
     var W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;
     var svg=sv('svg',{'class':'gar',viewBox:'0 0 '+W+' '+H,'aria-hidden':'true'});
     var defs=sv('defs',{},svg);
@@ -554,11 +555,12 @@ fieldset{border:0;padding:0;margin:0}
     grad('garLeafW','#1a0309','#4e0d1d','#8a2238');   // wine
     grad('garBlush','#a8606a','#e3a9a8','#f7dcd6');   // blush bud
     var LEAVES=['url(#garLeafG)','url(#garLeaf)','url(#garLeafS)','url(#garLeafW)','url(#garLeafG)','url(#garLeaf)'];
-    var isPaper=host.classList.contains('paper'),SC=isPaper?0.6:1,hb=host.getBoundingClientRect(),runs=[],E=isPaper?12:36,EV=isPaper?12:(W<700?13:36);
+    var isPaper=host.classList.contains('paper'),SC=isPaper?0.6:1,hb=host.getBoundingClientRect(),runs=[],halos=[],E=isPaper?12:36,EV=isPaper?12:(W<700?13:36);
     host.querySelectorAll(':scope > .corner').forEach(function(cr){
       var im=cr.querySelector('img'),cb=(im&&im.getBoundingClientRect().height>0?im:cr).getBoundingClientRect();
       var L=cb.left-hb.left,R=cb.right-hb.left,T=cb.top-hb.top,B=cb.bottom-hb.top,cw=cb.width,ch=cb.height;
       var right=cr.classList.contains('tr')||cr.classList.contains('br'),top=cr.classList.contains('tl')||cr.classList.contains('tr');
+      halos.push({L:L,R:R,T:T,B:B,cw:cw,ch:ch,right:right,top:top,op:parseFloat(getComputedStyle(cr).opacity)||1});
       var op=parseFloat(getComputedStyle(cr).opacity)||1;
       // along the horizontal edge, from the inner end of the roses to the middle
       var ex=top?E:H-E,x0=right?L+cw*0.32:R-cw*0.32,x1=W*0.5;
@@ -614,11 +616,33 @@ fieldset{border:0;padding:0;margin:0}
         }
       });
     });
-    host.insertBefore(svg,host.firstChild);
+    // leaves, buds and blossoms tucked around each rose cluster
+    var hsvg=sv('svg',{'class':'gar halo',viewBox:'0 0 '+W+' '+H,'aria-hidden':'true'});
+    halos.forEach(function(h,hi){
+      var g=sv('g',{opacity:h.op},hsvg),N=15,ox=h.right?h.R:h.L,oy=h.top?h.T:h.B,rx=h.cw*0.74,ry=h.ch*0.6;
+      for(var i=0;i<N;i++){
+        var th=(6+i*(78/(N-1)))*Math.PI/180,jit=((i*37+hi*11)%9-4);
+        var x=ox+(h.right?-1:1)*(rx+jit*1.5)*Math.cos(th),y=oy+(h.top?1:-1)*(ry+jit*1.5)*Math.sin(th);
+        var out=Math.atan2((h.top?1:-1)*Math.sin(th),(h.right?-1:1)*Math.cos(th))*180/Math.PI+90+((i%3)-1)*28;
+        var s=SC*(0.85+((i*13)%5)*0.08),kind=i%5,wrap=sv('g',{transform:'translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+out.toFixed(1)+')'},g),el;
+        if(kind===2){el=sv('g',{'class':'bd'},wrap);var br=7*s,pc=(i+hi)%2?['#f7efe4','#e8d6c2']:['#f4d3cf','#d99a9e'];
+          for(var pi=0;pi<5;pi++)sv('ellipse',{cx:'0',cy:(-br*0.62).toFixed(2),rx:(br*0.48).toFixed(2),ry:(br*0.7).toFixed(2),fill:pi%2?pc[1]:pc[0],stroke:'rgba(120,70,60,.35)','stroke-width':'.3',transform:'rotate('+(pi*72)+')'},el);
+          sv('circle',{r:(br*0.3).toFixed(2),fill:'#d9b25e'},el);}
+        else if(kind===4){el=sv('g',{'class':'bd'},wrap);var bl=16*s;
+          sv('path',{d:leafD(bl*0.55,bl*0.22),fill:'url(#garLeafG)',stroke:'rgba(198,164,106,.6)','stroke-width':'.5',transform:'rotate(-28)'},el);
+          sv('path',{d:leafD(bl*0.55,bl*0.22),fill:'url(#garLeafG)',stroke:'rgba(198,164,106,.6)','stroke-width':'.5',transform:'rotate(28)'},el);
+          sv('path',{d:leafD(bl*0.8,bl*0.34),fill:(i%2?'url(#garBlush)':'url(#garBud)'),stroke:'rgba(0,0,0,.45)','stroke-width':'.4'},el);}
+        else{el=sv('g',{'class':'lf'},wrap);var Lf=22*s;
+          sv('path',{d:leafD(Lf,Lf*0.42),fill:LEAVES[(i*5+hi)%LEAVES.length],stroke:'rgba(198,164,106,.65)','stroke-width':'.6'},el);
+          sv('path',{d:'M0 -1 L0 '+(-Lf*.85).toFixed(1),stroke:'rgba(198,164,106,.4)','stroke-width':'.45'},el);}
+        el.style.transitionDelay=(0.3+i*0.08+hi*0.2).toFixed(2)+'s';
+      }
+    });
+    host.insertBefore(svg,host.firstChild);host.appendChild(hsvg);
   }
   var garHosts=document.querySelectorAll('[data-garland]');
   function allGarlands(){garHosts.forEach(garland)}
-  allGarlands();
+  allGarlands();addEventListener('load',function(){allGarlands();garHosts.forEach(function(h){if(h.classList.contains('grow')){h.classList.remove('grow');void h.offsetWidth;h.classList.add('grow')}})});
   addEventListener('resize',function(){clearTimeout(allGarlands.t);allGarlands.t=setTimeout(allGarlands,200)});
   if('IntersectionObserver' in window){var gio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('grow');gio.unobserve(e.target)}})},{threshold:.2});garHosts.forEach(function(h){gio.observe(h)})}
   setTimeout(function(){garHosts.forEach(function(h){h.classList.add('grow')})},9000);
