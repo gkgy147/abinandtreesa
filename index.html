@@ -115,7 +115,7 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 
 /* ---------- Opener: ivory card with arched photo, on black velvet ---------- */
 #opener{position:fixed;inset:0;z-index:50;display:flex;align-items:safe center;justify-content:center;overflow-y:auto;overflow-x:hidden;
-  background:radial-gradient(ellipse 55% 40% at 22% 18%,rgba(255,248,234,.6) 0%,transparent 70%),radial-gradient(ellipse 50% 38% at 80% 78%,rgba(246,232,206,.45) 0%,transparent 70%),radial-gradient(ellipse 120% 90% at 50% 50%,#f3e7d3 0%,#e9d8bc 55%,#d9c19c 100%);
+  background:radial-gradient(ellipse 55% 40% at 22% 18%,rgba(255,248,234,.6) 0%,transparent 70%),radial-gradient(ellipse 50% 38% at 80% 78%,rgba(246,232,206,.45) 0%,transparent 70%),radial-gradient(ellipse 120% 90% at 50% 50%,#eadccb 0%,#dccab5 55%,#c9b29a 100%);
   transition:opacity 1.2s ease, visibility 1.2s;padding:max(14px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(14px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 #opener::before{content:"";position:fixed;inset:0;z-index:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .28 0 0 0 0 .15 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),radial-gradient(ellipse 85% 75% at 50% 50%,transparent 55%,rgba(120,80,40,.14) 100%);mix-blend-mode:multiply;pointer-events:none}
 #opener.gone{opacity:0;visibility:hidden}
@@ -158,27 +158,35 @@ h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(34px,7.4vw,50px);l
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(91,15,31,.45)}50%{box-shadow:0 0 0 12px rgba(91,15,31,0)}}
 
 /* Opener palette: maroon & champagne */
-#opener .card{--ph:clamp(200px,36vh,300px);color:#4a2a1c;
-  background:linear-gradient(180deg,#4e0f1d 0px,#6e1a2b calc(24px + var(--ph) * .55),#7d2233 calc(24px + var(--ph)),transparent calc(24px + var(--ph))),
-  radial-gradient(ellipse 80% 40% at 30% 60%,rgba(255,250,238,.55),transparent 70%),radial-gradient(ellipse 70% 35% at 75% 88%,rgba(214,186,140,.35),transparent 70%),
-  linear-gradient(180deg,#efe0c4 0%,#ead7b6 60%,#e2cba4 100%);
-  box-shadow:inset 0 0 0 11px #4a0d1a,inset 0 0 0 12px #2e0610,0 30px 70px rgba(70,30,15,.38),0 6px 18px rgba(70,30,15,.22)}
-#opener .card::before{inset:13px;border-color:#b8924f}
-#opener .card::after{inset:16px;border-color:rgba(184,146,79,.35)}
-#opener .card .tw{color:#5e3c26}
-#opener .card .nm{background:linear-gradient(100deg,#4a2c10 0%,#7a5626 22%,#a47c3e 34%,#6b4a1e 48%,#4e3212 62%,#8e6a30 78%,#4a2c10 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 1px 0 rgba(255,248,232,.7))}
-#opener .card .weds{color:#5e3c26}
-#opener .card .weds::before,#opener .card .weds::after{background:linear-gradient(90deg,transparent,#a8823f)}
-#opener .card .req{color:#4a2418}
-#opener .daterow span{color:#7a5428}
-#opener .daterow span+span{border-left-color:rgba(138,100,48,.55)}
-#opener .daterow b{color:#3e1f12}
-#opener .card .ven{color:#5a3624}
-#opener .card .btn{background:linear-gradient(180deg,#f1e2c6,#e2cba2);border-color:#a8823f;color:#3e1f12;box-shadow:inset 0 0 0 3px rgba(255,248,232,.5)}
+#opener .card{--fr:clamp(16px,5.4vw,24px);--ph:clamp(200px,36vh,300px);--pt:calc(var(--fr) + 5px + var(--ph));color:#3d2614;
+  padding:calc(var(--fr) + 5px) calc(var(--fr) + 6px) calc(var(--fr) + 16px);
+  background:
+   linear-gradient(180deg,rgba(70,30,12,.32),rgba(70,30,12,0)) 0 var(--pt)/100% 12px no-repeat,
+   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 12' preserveAspectRatio='none'%3E%3Cpath d='M0 7 C40 3 70 10 115 6 S190 2 240 7 S330 11 400 5 V12 H0Z' fill='%23dcc4a2'/%3E%3C/svg%3E") 0 calc(var(--pt) - 7px)/100% 12px no-repeat,
+   linear-gradient(180deg,#3c0f17 0%,#5a1a25 45%,#7a2a35 85%,#83303b 100%) 0 0/100% var(--pt) no-repeat,
+   radial-gradient(ellipse 70% 45% at 50% 55%,rgba(244,230,206,.75),transparent 75%),
+   radial-gradient(ellipse 110% 70% at 50% 60%,transparent 55%,rgba(150,112,72,.35) 100%),
+   linear-gradient(180deg,#dcc4a2 0%,#d8bf9c 60%,#ccb08b 100%);
+  box-shadow:inset 0 0 0 var(--fr) #43101b,inset 0 0 0 calc(var(--fr) - 2px) #3a0d17,0 18px 40px rgba(60,30,20,.35),0 4px 12px rgba(60,30,20,.25)}
+#opener .card::before{inset:var(--fr);border:1.5px solid #c9a35c;box-shadow:0 0 0 1px rgba(30,6,10,.55),inset 0 0 0 1px rgba(30,6,10,.25)}
+#opener .card::after{display:none}
+#opener .card .photo{margin:0 9px;box-shadow:0 0 0 1.5px #c9a35c}
+#opener .card .photo-line{margin:0 9px;background:#c9a35c}
+#opener .crest::before{background:radial-gradient(ellipse at 45% 40%,#3a1c12 0%,#1c0a06 75%);box-shadow:0 0 0 2px rgba(20,8,4,.9),0 4px 14px rgba(0,0,0,.45)}
+#opener .crest img{opacity:1;filter:brightness(1.18) saturate(1.25) drop-shadow(0 1px 2px rgba(40,20,5,.55))}
+#opener .card .tw{color:#3d2614;font-size:9.5px}
+#opener .card .nm{background:linear-gradient(180deg,#4a3018 0%,#33200e 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:none;filter:drop-shadow(0 1px 0 rgba(255,244,222,.5))}
+#opener .card .weds{color:#3d2614}
+#opener .card .weds::before,#opener .card .weds::after{background:linear-gradient(90deg,transparent,#8a6a3c)}
+#opener .card .req{color:#3d2018;font-size:10px;letter-spacing:.2em}
+#opener .daterow span{color:#4a3018}
+#opener .daterow span+span{border-left-color:#b8924f}
+#opener .daterow b{color:#33200e}
+#opener .card .ven{color:#3d2614;font-size:10px}
+#opener .card .btn{background:linear-gradient(180deg,#eedcbc,#dcc39c);border:1px solid #b8924f;color:#33200e;box-shadow:inset 0 0 0 3px #eedcbc,inset 0 0 0 4px rgba(184,146,79,.7),0 3px 8px rgba(60,30,15,.3)}
 #opener .card .btn:hover,#opener .card .btn:focus-visible{background:#c6a46a;border-color:#8e6c33;color:#2a0710}
 #opener .card .btn:focus-visible{outline-color:#4a0d1a}
-#opener .pulse{animation-name:pulseC}
-@keyframes pulseC{0%,100%{box-shadow:inset 0 0 0 3px rgba(255,248,232,.5),0 0 0 0 rgba(168,130,63,.45)}50%{box-shadow:inset 0 0 0 3px rgba(255,248,232,.5),0 0 0 12px rgba(168,130,63,0)}}
+#opener .pulse{animation:none}
 
 /* ---------- Hero ---------- */
 .hero{overflow:hidden;position:relative;min-height:94vh;display:flex;align-items:flex-end;padding-block:0}
